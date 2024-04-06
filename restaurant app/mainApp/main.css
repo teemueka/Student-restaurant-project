@@ -1,0 +1,132 @@
+/* --black: #000000ff;
+--oxford-blue: #14213dff;
+--cinereous: #8a716aff;
+--silver: #c2b8b2ff;
+--honolulu-blue: #197bbdff; */
+
+body {
+  background-image: linear-gradient(45deg, #14213dff, #197bbdff, #360559);
+  height: 200vh;
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+#banner {
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 0 20px;
+}
+
+#banner h1 {
+  color: whitesmoke;
+  z-index: 2;
+}
+
+.extras {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.extras.left {
+  left: 20px;
+}
+
+.extras.right {
+  right: 20px;
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-image: url('../images/default-avatar.jpg');
+  background-size: cover;
+}
+
+#map-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 600px;
+}
+
+#map {
+  height: 85%;
+  width: 75%;
+  border: 2px solid #000;
+  box-shadow: 5px 5px 5px rgb(0 0 0 / 50%)
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin: 0;
+  padding: 0;
+}
+
+th {
+  background-color: #f0f0f0;
+  border-bottom: 1px solid #ccc;
+  font-weight: normal;
+  padding: 0.5em 1em;
+  text-align: left;
+}
+
+td {
+  border-bottom: 1px solid #ccc;
+  padding: 0.5em 1em;
+}
+
+.highlight {
+  background-color: #2e1ae2;
+  font-weight: 900;
+}
+
+.modal {
+  background-color: rgb(201, 198, 241);
+  box-shadow: 5px 5px 10px rgb(0 0 0 / 50%);
+}
+
+
+#close-button {
+  background-color: rgb(113, 118, 154);
+  font-weight: 900;
+}
+
+#close-button:hover {
+  background-color: rgb(93, 95, 107);
+}
+
+#buttons {
+  margin-bottom: 1em;
+  margin-left: 0.2em;
+}
+
+#banner {
+  text-align: center;
+}
+
+#buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+button {
+  cursor: pointer;
+}
+
+#buttons p {
+  margin-bottom: 10px; /* Optional: Add some space below the paragraph */
+}
+
+.avatar {
+  cursor: pointer;
+}

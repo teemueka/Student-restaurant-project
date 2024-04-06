@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+        crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+          crossorigin=""></script>
+</head>
+<body>
+<div id="banner">
+  <div class="extras left">
+    <!-- Any other left-aligned elements -->
+  </div>
+  <h1>Student Restaurants</h1>
+  <div class="extras right">
+    <div id="profile" class="avatar"></div>
+    <!-- Any right-aligned elements -->
+  </div>
+</div>
+<div id="buttons">
+  <p>Sort restaurants</p>
+  <div id="button-container">
+    <button id="default">All</button>
+    <button id="sodexoBtn">Sodexo</button>
+    <button id="compassBtn">Compass Group</button>
+  </div>
+</div>
+<div id="map-container">
+  <div id="map"></div>
+</div>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Company</th>
+    </tr>
+    <!-- add restaurants here -->
+  </table>
+  <!-- modal -->
+  <dialog class="modal">
+    <h2>Restaurant information</h2>
+    <!-- add restaurant info here when restaurant is clicked -->
+  </dialog>
+  <script type="module" src="main.js"></script>
+</body>
+
+</html>

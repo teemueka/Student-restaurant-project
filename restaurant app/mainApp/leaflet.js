@@ -1,0 +1,73 @@
+let map;
+let markers = [];
+
+const userIcon = L.icon({
+  iconUrl: '../images/marker-icon-red.png',
+  iconSize: [25, 41],
+});
+
+const initializeMap = (userLatitude, userLongitude) => {
+  map = L.map('map').setView([userLatitude, userLongitude], 12);
+
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution:
+      '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+  }).addTo(map);
+
+  const user = L.marker([userLatitude, userLongitude], {icon: userIcon}).addTo(
+    map
+  );
+  const userPopup = `<p>You are here</p>`;
+  user.bindPopup(userPopup);
+};
+
+const addMarkers = (restaurants) => {
+  removeMarkers();
+
+  navigator.geolocation.getCurrentPosition((position) => {
+    const userLatitude = position.coords.latitude;
+    const userLongitude = position.coords.longitude;
+
+    restaurants.forEach((restaurant) => {
+      const distance = calculateDistance(
+        userLatitude,
+        userLongitude,
+        restaurant.location.coordinates[1],
+        restaurant.location.coordinates[0]
+      );
+
+      const marker = L.marker([
+        restaurant.location.coordinates[1],
+        restaurant.location.coordinates[0],
+      ]).addTo(map);
+
+      const popup = `<b>${restaurant.name}</b><br>${restaurant.address}<br>Distance: ${distance.toFixed(2)} km`;
+      marker.bindPopup(popup);
+    });
+  });
+};
+
+const removeMarkers = () => {
+  markers.forEach((marker) => {
+    marker.remove();
+  });
+  markers = [];
+};
+
+const calculateDistance = (lat1, lon1, lat2, lon2) => {
+  const R = 6371;
+  const dLat = ((lat2 - lat1) * Math.PI) / 180;
+  const dLon = ((lon2 - lon1) * Math.PI) / 180;
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos((lat1 * Math.PI) / 180) *
+      Math.cos((lat2 * Math.PI) / 180) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  const distance = R * c;
+  return distance;
+};
+
+export {initializeMap, addMarkers};

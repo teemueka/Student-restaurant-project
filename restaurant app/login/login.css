@@ -1,0 +1,67 @@
+body {
+  background-image: linear-gradient(45deg, #14213dff, #197bbdff, #360559);
+  height: 100vh;
+}
+
+#form {
+  background-color: whitesmoke;
+  width: 300px;
+  margin: 20vh auto 0 auto;
+  padding: 20px;
+  border-radius: 4px;
+  font-size: 12px;
+  box-shadow: 8px 8px 10px rgb(0 0 0 / 50%);
+}
+
+#form h1 {
+  color: #282841;
+  text-align: center;
+}
+
+#form button {
+  padding: 10px;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.input-control {
+  display: flex;
+  flex-direction: column;
+  padding-right: 20px;
+}
+
+
+.input-control input {
+  border: 2px solid white;
+  border-radius: 4px;
+  display: block;
+  font-size: 12px;
+  padding: 10px;
+  width: 100%;
+}
+
+.input-control input:focus {
+  outline: 0;
+}
+
+.alreadyUser {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+}
+
+.alreadyUser p,
+.alreadyUser a {
+  margin: 0;
+  padding: 5px;
+}
+
+.alreadyUser a {
+  text-decoration: none;
+}
+
+.alreadyUser a:hover {
+  color: #197bbdff;
+}
+
