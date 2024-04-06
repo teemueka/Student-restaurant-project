@@ -29,6 +29,9 @@ const addMarkers = (restaurants) => {
     const userLatitude = position.coords.latitude;
     const userLongitude = position.coords.longitude;
 
+    let minDistance = Infinity;
+    let nearestMarker = null;
+
     restaurants.forEach((restaurant) => {
       const distance = calculateDistance(
         userLatitude,
@@ -44,7 +47,22 @@ const addMarkers = (restaurants) => {
 
       const popup = `<b>${restaurant.name}</b><br>${restaurant.address}<br>Distance: ${distance.toFixed(2)} km`;
       marker.bindPopup(popup);
+      markers.push(marker);
+
+      if (distance < minDistance) {
+        minDistance = distance;
+        nearestMarker = marker;
+      }
     });
+
+    if (nearestMarker) {
+      nearestMarker.setIcon(
+        L.icon({
+          iconUrl: '../images/marker-icon-red.png',
+          iconSize: [25, 41],
+        })
+      );
+    }
   });
 };
 
