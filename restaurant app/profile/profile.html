@@ -14,10 +14,32 @@
   <h1>Profile</h1>
   <div class="extras right">
     <div id="profile" class="avatar"></div>
+    <p id="userName">username</p>
     <!-- Any right-aligned elements -->
   </div>
 </div>
-<div id="mainContainer"></div>
+<div id="mainContainer">
+  <form id="form" action="../mainApp/main.html" method="POST">
+    <h2>Update profile</h2>
+    <div class="pfp">
+      <img src="../images/default-avatar.jpg" alt="image loading failed" id="profilePicture">
+      <input type="file" name="photo" id="photo">
+    </div>
+    <div class="profile-inputs">
+      <label for="profileUsername">Username</label>
+      <input id="profileUsername" name="profileUsername" type="text">
+    </div>
+    <div class="profile-inputs">
+      <label for="profileEmail">Email</label>
+      <input id="profileEmail" name="profileEmail" type="text">
+    </div>
+    <div class="profile-inputs">
+      <label for="profilePassword">Password</label>
+      <input id="profilePassword" name="profilePassword" type="password">
+    </div>
+    <button type="submit">Update</button>
+  </form>
+</div>
 </body>
 
 </html>

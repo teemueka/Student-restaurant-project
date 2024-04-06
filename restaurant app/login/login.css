@@ -1,4 +1,5 @@
 body {
+  font-family: sans-serif;
   background-image: linear-gradient(45deg, #14213dff, #197bbdff, #360559);
   height: 100vh;
 }
@@ -24,12 +25,19 @@ body {
   width: 100%;
 }
 
+input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
 .input-control {
   display: flex;
   flex-direction: column;
   padding-right: 20px;
+  padding-top: 5px;
 }
-
 
 .input-control input {
   border: 2px solid white;
@@ -40,15 +48,15 @@ body {
   width: 100%;
 }
 
-.input-control input:focus {
-  outline: 0;
-}
-
 .alreadyUser {
   display: flex;
   justify-content: center;
   align-items: center;
   text-decoration: none;
+}
+
+.alreadyUser {
+  margin-top: 10px;
 }
 
 .alreadyUser p,
