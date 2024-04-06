@@ -46,19 +46,23 @@ const addMarkers = (restaurants) => {
       ]).addTo(map);
 
       const popup = `<b>${restaurant.name}</b><br>${restaurant.address}<br>Distance: ${distance.toFixed(2)} km`;
-      marker.bindPopup(popup);
-      markers.push(marker);
 
       if (distance < minDistance) {
         minDistance = distance;
         nearestMarker = marker;
       }
+      marker.bindPopup(popup);
+      markers.push(marker);
     });
 
     if (nearestMarker) {
+      nearestMarker.bindPopup(
+        nearestMarker.getPopup().getContent() +
+          '<br><i>This is your nearest restaurant</i>'
+      );
       nearestMarker.setIcon(
         L.icon({
-          iconUrl: '../images/marker-icon-red.png',
+          iconUrl: '../images/marker-icon-gold.png',
           iconSize: [25, 41],
         })
       );
