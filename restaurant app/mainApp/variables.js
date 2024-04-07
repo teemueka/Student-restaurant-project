@@ -38,6 +38,35 @@ const dailyMenu = async (id) => {
   }
 };
 
+const userLogin = async (username, password) => {
+  const url = 'https://10.120.32.94/restaurant/api/v1/auth/login';
+
+  const requestData = {
+    username: username,
+    password: password,
+  };
+
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestData),
+    });
+
+    const responseData = await response.json();
+    if (response.ok) {
+      return responseData;
+    } else {
+      throw new Error(responseData.message || 'Failed to log in.');
+    }
+  } catch (error) {
+    console.error('Error logging in:', error.message);
+    throw error;
+  }
+};
+
 const createUser = async (userData) => {
   const url = 'https://10.120.32.94/restaurant/api/v1/users';
 
@@ -120,15 +149,12 @@ const updateUser = async (userData, accessToken) => {
   }
 };
 
-const getUserToken = async (accessToken) => {
+const getUserToken = async () => {
   const url = 'https://10.120.32.94/restaurant/api/v1/users/token';
 
   try {
     const response = await fetch(url, {
       method: 'GET',
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
     });
 
     if (response.status === 200) {
@@ -180,6 +206,7 @@ export {
   fetchData,
   weeklyMenu,
   dailyMenu,
+  userLogin,
   uploadAvatar,
   createUser,
   checkUsernameAvailability,
