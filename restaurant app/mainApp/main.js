@@ -1,6 +1,6 @@
 import {baseUrl} from './utils.js';
 import {fetchData, weeklyMenu, dailyMenu} from './variables.js';
-import {initializeMap, addMarkers} from './leaflet.js';
+import {initializeMap, addMarkers, calculateDistance} from './leaflet.js';
 
 navigator.geolocation.getCurrentPosition((position) => {
   const userLatitude = position.coords.latitude;
@@ -18,6 +18,24 @@ const processRestaurants = async () => {
 
   return restaurants;
 };
+
+// I know this function is a piece of shit, but it works so w.e
+const sortByDistance = async (distance) => {
+  let sorted = [];
+  let restaurants = await processRestaurants();
+
+  navigator.geolocation.getCurrentPosition((position) => {
+    const userLatitude = position.coords.latitude;
+    const userLongitude = position.coords.longitude;
+    restaurants.forEach((restaurant) => {
+      const distanceFromUser = calculateDistance(userLatitude, userLongitude, restaurant.location.coordinates[1], restaurant.location.coordinates[0])
+      if (distanceFromUser < distance) {
+        sorted.push(restaurant);
+      }
+  })
+  addMarkers(sorted)
+  });
+}
 
 const sortRestaurants = async (sortBy) => {
   let restaurants = await processRestaurants();
@@ -38,22 +56,34 @@ const sortRestaurants = async (sortBy) => {
 
 const displayAll = document.getElementById('default');
 displayAll.addEventListener('click', async () => {
-  sortRestaurants('all');
+  await sortRestaurants('all');
 });
 
 const sodexoButton = document.getElementById('sodexoBtn');
 sodexoButton.addEventListener('click', async () => {
-  sortRestaurants('sodexo');
+  await sortRestaurants('sodexo');
 });
 
 const compassButton = document.getElementById('compassBtn');
 compassButton.addEventListener('click', async () => {
-  sortRestaurants('compass group');
+  await sortRestaurants('compass group');
 });
+
+const distanceInput = document.getElementById('distance');
+const distanceSort = document.getElementById('distanceSort');
+const distanceError = document.getElementById('distanceError');
+distanceSort.addEventListener('click', async () => {
+  distanceError.innerHTML = '';
+  const distance = distanceInput.value;
+  if (distance >= 0 && distance.trim() !== '') {
+    await sortByDistance(distance);
+  } else {
+    distanceError.innerHTML = '<p>Invalid distance</p>';
+  }
+})
 
 const userProfile = document.getElementById('profile');
 userProfile.addEventListener('click', () => {
-  console.log('avatar clicked');
   window.location.href = '../profile/profile.html';
 });
 

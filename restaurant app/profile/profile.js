@@ -1,4 +1,9 @@
-import {updateUser, getUserToken, uploadAvatar, checkUsernameAvailability} from "../mainApp/variables.js";
+import {
+  updateUser,
+  getUserToken,
+  uploadAvatar,
+  checkUsernameAvailability,
+} from '../mainApp/variables.js';
 
 document.addEventListener('DOMContentLoaded', (event) => {
   const form = document.getElementById('updateUserForm');

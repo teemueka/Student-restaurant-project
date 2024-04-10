@@ -135,9 +135,19 @@ button {
 }
 
 #buttons p {
-  margin-bottom: 10px; /* Optional: Add some space below the paragraph */
+  margin-bottom: 10px;
 }
 
 .avatar {
   cursor: pointer;
+}
+
+#dist-container {
+  padding-top: 5px;
+}
+
+#distanceError p {
+  padding-top: 4px;
+  color: red;
+  margin: 0;
 }

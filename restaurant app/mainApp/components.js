@@ -1,10 +1,3 @@
-const restaurantRow = (restaurant) => {
-  const {name, company} = restaurant;
-  const newTr = document.createElement('tr');
-  newTr.innerHTML = `<td>${name}</td><td>${company}</td>`;
-  return newTr;
-};
-
 const restaurantModal = (restaurant, menu) => {
   const {name, address, postalCode, city, phone, company} = restaurant;
 

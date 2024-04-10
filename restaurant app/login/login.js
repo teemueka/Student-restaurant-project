@@ -1,4 +1,8 @@
-import {checkUsernameAvailability,userLogin, createUser} from '../mainApp/variables.js';
+import {
+  checkUsernameAvailability,
+  userLogin,
+  createUser,
+} from '../mainApp/variables.js';
 
 const form = document.getElementById('form');
 const usernameInput = document.getElementById('username');
@@ -49,7 +53,7 @@ form.addEventListener('submit', async (event) => {
 
   try {
     await handleRegistration(userData);
-    // window.location.href = 'main.html';
+    window.location.href = 'main.html';
   } catch (error) {
     console.error('Error registering user:', error.message);
   }
