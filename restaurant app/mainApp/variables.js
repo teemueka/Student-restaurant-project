@@ -135,7 +135,6 @@ const updateUser = async (userData, accessToken) => {
 
     const responseData = await response.json();
     if (response.ok) {
-      console.log('User information updated successfully:', responseData);
       return responseData;
     } else if (response.status === 401) {
       throw new Error(
@@ -161,8 +160,7 @@ const getUserToken = async () => {
     });
 
     if (response.status === 200) {
-      const userData = await response.json();
-      return userData;
+      return await response.json();
     } else if (response.status === 403) {
       throw new Error('Token is not valid.');
     } else {

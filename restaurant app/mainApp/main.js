@@ -2,12 +2,11 @@ import {baseUrl} from './utils.js';
 import {fetchData, weeklyMenu, dailyMenu} from './variables.js';
 import {initializeMap, addMarkers, calculateDistance} from './leaflet.js';
 
-const currentUser = localStorage.getItem('user');
+const currentUser = JSON.parse(localStorage.getItem('user'));
 console.log(currentUser);
-const parseUser = JSON.parse(localStorage.getItem('user'));
-console.log(parseUser);
-console.log(parseUser.data);
-console.log(parseUser.token);
+document.getElementById('userName').innerHTML = currentUser.data.username;
+// const userToken = currentUser.token;
+// console.log(userToken);
 
 navigator.geolocation.getCurrentPosition((position) => {
   const userLatitude = position.coords.latitude;
@@ -28,21 +27,26 @@ const processRestaurants = async () => {
 
 // I know this function is a piece of shit, but it works so w.e
 const sortByDistance = async (distance) => {
-  let sorted = [];
-  let restaurants = await processRestaurants();
+  const sorted = [];
+  const restaurants = await processRestaurants();
 
   navigator.geolocation.getCurrentPosition((position) => {
     const userLatitude = position.coords.latitude;
     const userLongitude = position.coords.longitude;
     restaurants.forEach((restaurant) => {
-      const distanceFromUser = calculateDistance(userLatitude, userLongitude, restaurant.location.coordinates[1], restaurant.location.coordinates[0])
+      const distanceFromUser = calculateDistance(
+        userLatitude,
+        userLongitude,
+        restaurant.location.coordinates[1],
+        restaurant.location.coordinates[0]
+      );
       if (distanceFromUser < distance) {
         sorted.push(restaurant);
       }
-  })
-  addMarkers(sorted)
+    });
+    addMarkers(sorted);
   });
-}
+};
 
 const sortRestaurants = async (sortBy) => {
   let restaurants = await processRestaurants();
@@ -87,7 +91,7 @@ distanceSort.addEventListener('click', async () => {
   } else {
     distanceError.innerHTML = '<p>Invalid distance</p>';
   }
-})
+});
 
 const userProfile = document.getElementById('profile');
 userProfile.addEventListener('click', () => {
