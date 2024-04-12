@@ -2,6 +2,13 @@ import {baseUrl} from './utils.js';
 import {fetchData, weeklyMenu, dailyMenu} from './variables.js';
 import {initializeMap, addMarkers, calculateDistance} from './leaflet.js';
 
+const currentUser = localStorage.getItem('user');
+console.log(currentUser);
+const parseUser = JSON.parse(localStorage.getItem('user'));
+console.log(parseUser);
+console.log(parseUser.data);
+console.log(parseUser.token);
+
 navigator.geolocation.getCurrentPosition((position) => {
   const userLatitude = position.coords.latitude;
   const userLongitude = position.coords.longitude;

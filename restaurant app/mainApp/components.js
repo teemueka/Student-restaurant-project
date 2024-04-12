@@ -26,4 +26,4 @@ const restaurantModal = (restaurant, menu) => {
   return menuHtml;
 };
 
-export {restaurantRow, restaurantModal};
+export {restaurantModal};

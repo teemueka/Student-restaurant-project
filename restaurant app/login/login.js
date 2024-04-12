@@ -5,21 +5,20 @@ import {
 } from '../mainApp/variables.js';
 
 const form = document.getElementById('form');
-
 form.addEventListener('submit', async (event) => {
   event.preventDefault();
 
-  const reg_usernameInput = document.getElementById('reg-username');
-  const reg_emailInput = document.getElementById('reg-email');
-  const reg_passwordInput = document.getElementById('reg-password');
+  const regUsernameInput = document.getElementById('reg-username');
+  const regEmailInput = document.getElementById('reg-email');
+  const regPasswordInput = document.getElementById('reg-password');
 
-  const login_usernameInput = document.getElementById('login-username')
-  const login_passwordInput = document.getElementById('login-password')
+  const loginUsernameInput = document.getElementById('login-username');
+  const loginPasswordInput = document.getElementById('login-password');
 
-  if (reg_usernameInput && reg_emailInput && reg_passwordInput) {
-    const username = reg_usernameInput.value;
-    const email = reg_emailInput.value.trim();
-    const password = reg_passwordInput.value.trim();
+  if (regUsernameInput && regEmailInput && regPasswordInput) {
+    const username = regUsernameInput.value;
+    const email = regEmailInput.value.trim();
+    const password = regPasswordInput.value.trim();
     let hasErrors = false;
 
     try {
@@ -61,13 +60,12 @@ form.addEventListener('submit', async (event) => {
     } catch (error) {
       console.error('Error registering user:', error.message);
     }
-
-  } else if (login_usernameInput && login_passwordInput) {
-    const username = login_usernameInput.value;
-    const password = login_passwordInput.value.trim();
+  } else if (loginUsernameInput && loginPasswordInput) {
+    const username = loginUsernameInput.value;
+    const password = loginPasswordInput.value.trim();
 
     try {
-      await userLogin(username, password)
+      await userLogin(username, password);
       window.location.href = '../../restaurant app/mainApp/main.html';
     } catch (error) {
       document.getElementById('password-error').innerHTML =
@@ -96,7 +94,6 @@ const validateUsername = async (username) => {
   }
 };
 
-
 const validateEmail = (email) => {
   const regex =
     /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
@@ -119,7 +116,7 @@ const handleRegistration = async (userData) => {
     } else {
       document.getElementById('email-error').innerHTML = '';
     }
-    throw new Error('Registration failed')
+    throw new Error('Registration failed');
   }
 };
 const registration = () => {
@@ -147,8 +144,7 @@ const registration = () => {
     <button type="submit" >Register</button>`;
 
   document.getElementById('switchToLogin').addEventListener('click', login);
-
-}
+};
 
 const login = () => {
   form.innerHTML = `
@@ -169,8 +165,9 @@ const login = () => {
     </div>
     <button type="submit">Log in</button>`;
 
-  document.getElementById('switchToRegistration').addEventListener('click', registration);
-
-}
+  document
+    .getElementById('switchToRegistration')
+    .addEventListener('click', registration);
+};
 
 login();
