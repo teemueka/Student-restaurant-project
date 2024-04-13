@@ -84,7 +84,8 @@ const createUser = async (userData) => {
     const responseData = await response.json();
     if (response.ok) {
       console.log('New user created successfully:', responseData);
-      localStorage.setItem('user', responseData);
+      await localStorage.setItem('user', JSON.stringify(responseData));
+      await localStorage.setItem('token', responseData.token);
       return responseData;
     } else {
       throw new Error(`Failed to create new user: ${responseData.message}`);
@@ -135,15 +136,8 @@ const updateUser = async (userData, accessToken) => {
 
     const responseData = await response.json();
     if (response.ok) {
+      await localStorage.setItem('user', JSON.stringify(responseData));
       return responseData;
-    } else if (response.status === 401) {
-      throw new Error(
-        'Unauthorized: Only authenticated users can update their information.'
-      );
-    } else {
-      throw new Error(
-        `Failed to update user information: ${responseData.message}`
-      );
     }
   } catch (error) {
     console.error('Error updating user information:', error.message);
@@ -169,11 +163,8 @@ const uploadAvatar = async (avatarFile, jwtToken) => {
     const data = await response.json();
     if (response.ok) {
       console.log('Avatar uploaded successfully', data);
-      localStorage.setItem('AVATAR_KEY', data.data.avatar)
+      localStorage.setItem('AVATAR_KEY', data.data.avatar);
       return data;
-    } else {
-      console.log('Error uploading avatar: ', data.error);
-      throw new Error(data.error);
     }
   } catch (error) {
     console.log('Failed to upload avatar:', error.message);
@@ -181,8 +172,8 @@ const uploadAvatar = async (avatarFile, jwtToken) => {
   }
 };
 
-const getAvatar = async (avatar_key) => {
-  const url = `https://10.120.32.94/restaurant/uploads/${avatar_key}`;
+const getAvatar = async (avatarKey) => {
+  const url = `https://10.120.32.94/restaurant/uploads/${avatarKey}`;
 
   try {
     const response = await fetch(url, {
@@ -203,7 +194,6 @@ const getAvatar = async (avatar_key) => {
     throw error;
   }
 };
-
 
 export {
   getAvatar,

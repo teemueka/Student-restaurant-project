@@ -6,38 +6,31 @@ import {
 } from '../mainApp/variables.js';
 
 const currentUser = JSON.parse(localStorage.getItem('user'));
+const userToken = localStorage.getItem('token');
 console.log(currentUser);
-document.getElementById('userName').innerHTML = currentUser.data.username;
-document.getElementById('profileUsername').value = currentUser.data.username;
-document.getElementById('profileEmail').value = currentUser.data.email;
-document.getElementById('profilePassword').value = currentUser.data.password;
+console.log('token', userToken);
+
 const photoInput = document.getElementById('photo');
 const avatars = document.querySelectorAll('.avatar');
 
-const generateUserPictures = async () => {
-  const avatars = document.querySelectorAll('.avatar');
-  for (const pfp of avatars) {
-    pfp.src = await getAvatar(localStorage.getItem('AVATAR_KEY'));
-  }
-}
-
-await generateUserPictures();
 photoInput.addEventListener('change', async (evt) => {
   const avatarFile = evt.target.files[0];
   try {
+    // console.log(currentUser);
+    // console.log(currentUser.token);
     await uploadAvatar(avatarFile, currentUser.token);
     const reader = new FileReader();
     reader.onload = () => {
-      avatars.forEach(picture => {
+      avatars.forEach((picture) => {
         picture.src = reader.result;
-      })
+      });
     };
     reader.readAsDataURL(avatarFile);
   } catch (error) {
     console.log('Error uploading avatar', error);
   }
 });
-document.addEventListener('DOMContentLoaded', (event) => {
+document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('updateUserForm');
 
   form.addEventListener('submit', async function (e) {
@@ -49,6 +42,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     try {
       await checkUsernameAvailability(username);
+      console.log('username check');
     } catch (error) {
       console.log('username not available', error);
       return;
@@ -70,3 +64,18 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }
   });
 });
+
+const generateUserPictures = async () => {
+  const avatars = document.querySelectorAll('.avatar');
+  for (const pfp of avatars) {
+    pfp.src = await getAvatar(localStorage.getItem('AVATAR_KEY'));
+  }
+};
+
+if (currentUser !== null) {
+  document.getElementById('userName').innerHTML = currentUser.data.username;
+  document.getElementById('profileUsername').value = currentUser.data.username;
+  document.getElementById('profileEmail').value = currentUser.data.email;
+  document.getElementById('profilePassword').value = currentUser.data.password;
+  await generateUserPictures();
+}

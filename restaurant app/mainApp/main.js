@@ -1,12 +1,19 @@
 import {baseUrl} from './utils.js';
-import { fetchData, weeklyMenu, dailyMenu, getAvatar } from "./variables.js";
+import {fetchData, weeklyMenu, dailyMenu, getAvatar} from './variables.js';
 import {initializeMap, addMarkers, calculateDistance} from './leaflet.js';
 
+const userToken = localStorage.getItem('token');
+console.log(userToken);
 const currentUser = JSON.parse(localStorage.getItem('user'));
-console.log(currentUser);
-document.getElementById('userName').innerHTML = currentUser.data.username;
-const bannerPfp = document.getElementById('bannerPfp');
-bannerPfp.src = await getAvatar(localStorage.getItem('AVATAR_KEY'));
+if (currentUser !== null) {
+  try {
+    document.getElementById('userName').innerHTML = currentUser.data.username;
+    const bannerPfp = document.getElementById('bannerPfp');
+    bannerPfp.src = await getAvatar(localStorage.getItem('AVATAR_KEY'));
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 navigator.geolocation.getCurrentPosition((position) => {
   const userLatitude = position.coords.latitude;
