@@ -47,17 +47,20 @@ body {
   right: 20px;
 }
 
-.avatar {
+#bannerPfp {
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background-image: url('../images/default-avatar.jpg');
-  background-size: cover;
+  object-fit: cover;
   transition: transform 0.3s ease;
 }
 
-.avatar:hover {
+#bannerPfp:hover {
   transform: scale(1.1);
+}
+
+#bannerPfp {
+  cursor: pointer;
 }
 
 #map-container {
@@ -136,10 +139,6 @@ button {
 
 #buttons p {
   margin-bottom: 10px;
-}
-
-.avatar {
-  cursor: pointer;
 }
 
 #dist-container {

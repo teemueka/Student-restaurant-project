@@ -14,7 +14,9 @@
   </div>
   <h1>Profile</h1>
   <div class="extras right">
-    <div id="profile" class="avatar"></div>
+    <div id="profile">
+      <img src="../images/default-avatar.jpg" alt="Default Avatar" class="avatar" id="bannerPfp">
+    </div>
     <p id="userName"></p>
     <!-- Any right-aligned elements -->
   </div>
@@ -23,7 +25,7 @@
   <form id="updateUserForm" method="POST">
     <h2>Update profile</h2>
     <div class="pfp">
-      <img src="../images/default-avatar.jpg" alt="image loading failed" id="profilePicture">
+      <img src="../images/default-avatar.jpg" alt="image loading failed" id="profilePicture" class="avatar">
       <input type="file" name="photo" id="photo">
     </div>
     <div class="profile-inputs">

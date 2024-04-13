@@ -151,29 +151,6 @@ const updateUser = async (userData, accessToken) => {
   }
 };
 
-const getUserToken = async () => {
-  const url = 'https://10.120.32.94/restaurant/api/v1/users/token';
-
-  try {
-    const response = await fetch(url, {
-      method: 'GET',
-    });
-
-    if (response.status === 200) {
-      return await response.json();
-    } else if (response.status === 403) {
-      throw new Error('Token is not valid.');
-    } else {
-      throw new Error(
-        `Failed to fetch user information: ${response.statusText}`
-      );
-    }
-  } catch (error) {
-    console.error('Error fetching user information:', error.message);
-    throw error;
-  }
-};
-
 const uploadAvatar = async (avatarFile, jwtToken) => {
   const url = 'https://10.120.32.94/restaurant/api/v1/users/avatar';
 
@@ -211,6 +188,5 @@ export {
   uploadAvatar,
   createUser,
   checkUsernameAvailability,
-  getUserToken,
   updateUser,
 };
