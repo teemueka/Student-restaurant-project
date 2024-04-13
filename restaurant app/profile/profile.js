@@ -2,6 +2,7 @@ import {
   updateUser,
   uploadAvatar,
   checkUsernameAvailability,
+  getAvatar,
 } from '../mainApp/variables.js';
 
 const currentUser = JSON.parse(localStorage.getItem('user'));
@@ -13,12 +14,19 @@ document.getElementById('profilePassword').value = currentUser.data.password;
 const photoInput = document.getElementById('photo');
 const avatars = document.querySelectorAll('.avatar');
 
+const generateUserPictures = async () => {
+  const avatars = document.querySelectorAll('.avatar');
+  for (const pfp of avatars) {
+    pfp.src = await getAvatar(localStorage.getItem('AVATAR_KEY'));
+  }
+}
+
+await generateUserPictures();
 photoInput.addEventListener('change', async (evt) => {
   const avatarFile = evt.target.files[0];
   try {
     await uploadAvatar(avatarFile, currentUser.token);
     const reader = new FileReader();
-    // localStorage.setItem('AVATAR_KEY', avatarFile.name);
     reader.onload = () => {
       avatars.forEach(picture => {
         picture.src = reader.result;

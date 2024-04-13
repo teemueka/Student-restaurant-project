@@ -169,6 +169,7 @@ const uploadAvatar = async (avatarFile, jwtToken) => {
     const data = await response.json();
     if (response.ok) {
       console.log('Avatar uploaded successfully', data);
+      localStorage.setItem('AVATAR_KEY', data.data.avatar)
       return data;
     } else {
       console.log('Error uploading avatar: ', data.error);
@@ -180,7 +181,32 @@ const uploadAvatar = async (avatarFile, jwtToken) => {
   }
 };
 
+const getAvatar = async (avatar_key) => {
+  const url = `https://10.120.32.94/restaurant/uploads/${avatar_key}`;
+
+  try {
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (response.ok) {
+      const imageData = await response.blob();
+      return URL.createObjectURL(imageData);
+    } else {
+      throw new Error('Failed to fetch avatar image');
+    }
+  } catch (error) {
+    console.error('Error fetching avatar:', error);
+    throw error;
+  }
+};
+
+
 export {
+  getAvatar,
   fetchData,
   weeklyMenu,
   dailyMenu,
