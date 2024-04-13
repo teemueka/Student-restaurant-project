@@ -24,6 +24,7 @@ body {
 #banner h1 {
   color: whitesmoke;
   z-index: 2;
+  cursor: pointer;
 }
 
 .extras {

@@ -79,3 +79,7 @@ if (currentUser !== null) {
   document.getElementById('profilePassword').value = currentUser.data.password;
   await generateUserPictures();
 }
+
+document.getElementById('banner').addEventListener('click', () => {
+  window.location.href = '../../restaurant app/mainApp/main.html';
+});
