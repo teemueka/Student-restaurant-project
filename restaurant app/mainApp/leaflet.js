@@ -45,7 +45,7 @@ const addMarkers = (restaurants) => {
         restaurant.location.coordinates[0],
       ]).addTo(map);
 
-      const popup = `<b>${restaurant.name}</b><br>${restaurant.address}<br>Distance: ${distance.toFixed(2)} km`;
+      const popup = `<b>${restaurant.name}</b><br>${restaurant.address}<br>Distance: ${distance.toFixed(2)} km<br><button id="dailyMenu">days menu</button><button id="weekMenu">weeks menu</button>`;
 
       if (distance < minDistance) {
         minDistance = distance;
@@ -91,5 +91,6 @@ const calculateDistance = (lat1, lon1, lat2, lon2) => {
   const distance = R * c;
   return distance;
 };
+
 
 export {initializeMap, addMarkers, calculateDistance};
