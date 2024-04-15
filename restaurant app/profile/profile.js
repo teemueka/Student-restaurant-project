@@ -7,18 +7,23 @@ import {
 
 const currentUser = JSON.parse(localStorage.getItem('user'));
 const userToken = localStorage.getItem('token');
-console.log(currentUser);
+const avatarKey = localStorage.getItem('AVATAR_KEY');
+console.log('avatar_key', avatarKey);
+console.log('currentUser', currentUser);
 console.log('token', userToken);
 
+if (currentUser === null) {
+  window.location.href = '../../restaurant app/login/login.html';
+}
+
+const deleteButton = document.getElementById('delete');
 const photoInput = document.getElementById('photo');
 const avatars = document.querySelectorAll('.avatar');
 
 photoInput.addEventListener('change', async (evt) => {
   const avatarFile = evt.target.files[0];
   try {
-    // console.log(currentUser);
-    // console.log(currentUser.token);
-    await uploadAvatar(avatarFile, currentUser.token);
+    await uploadAvatar(avatarFile, userToken);
     const reader = new FileReader();
     reader.onload = () => {
       avatars.forEach((picture) => {
@@ -42,7 +47,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     try {
       await checkUsernameAvailability(username);
-      console.log('username check');
     } catch (error) {
       console.log('username not available', error);
       return;
@@ -55,31 +59,34 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     try {
-      const responseData = await updateUser(userData, currentUser.token);
-      console.log('Update successful', responseData);
-      document.getElementById('userName').innerHTML =
-        responseData.data.username;
+      const responseData = await updateUser(userData, userToken);
+      if (responseData !== undefined) {
+        document.getElementById('userName').innerHTML =
+          responseData.data.username;
+      }
     } catch (error) {
       console.error('Update failed', error);
     }
   });
 });
 
-const generateUserPictures = async () => {
-  const avatars = document.querySelectorAll('.avatar');
-  for (const pfp of avatars) {
-    pfp.src = await getAvatar(localStorage.getItem('AVATAR_KEY'));
-  }
-};
-
 if (currentUser !== null) {
-  document.getElementById('userName').innerHTML = currentUser.data.username;
-  document.getElementById('profileUsername').value = currentUser.data.username;
-  document.getElementById('profileEmail').value = currentUser.data.email;
-  document.getElementById('profilePassword').value = currentUser.data.password;
-  await generateUserPictures();
+  document.getElementById('userName').innerHTML = currentUser.username;
+  document.getElementById('profileUsername').value = currentUser.username;
+  document.getElementById('profileEmail').value = currentUser.email;
 }
 
-document.getElementById('banner').addEventListener('click', () => {
+if (avatarKey !== null) {
+  const avatars = document.querySelectorAll('.avatar');
+  for (const pfp of avatars) {
+    pfp.src = await getAvatar(avatarKey);
+  }
+}
+
+document.getElementById('header').addEventListener('click', () => {
   window.location.href = '../../restaurant app/mainApp/main.html';
+});
+
+deleteButton.addEventListener('click', async () => {
+  console.log('aaaaaaaaaaaaaaaaaaa');
 });

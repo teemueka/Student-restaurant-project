@@ -112,6 +112,8 @@ const validatePassword = (password) => {
 const handleRegistration = async (userData) => {
   try {
     await createUser(userData);
+    const {username, password} = userData;
+    await userLogin(username, password);
     window.location.href = '../../restaurant app/mainApp/main.html';
   } catch (error) {
     console.error('Error registering user: ', error.message);
@@ -123,6 +125,7 @@ const handleRegistration = async (userData) => {
     throw new Error('Registration failed');
   }
 };
+
 const registration = () => {
   form.innerHTML = `
     <h1>Registration</h1>

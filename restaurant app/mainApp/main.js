@@ -2,14 +2,20 @@ import {baseUrl} from './utils.js';
 import {fetchData, weeklyMenu, dailyMenu, getAvatar} from './variables.js';
 import {initializeMap, addMarkers, calculateDistance} from './leaflet.js';
 
-const userToken = localStorage.getItem('token');
-console.log(userToken);
 const currentUser = JSON.parse(localStorage.getItem('user'));
+const userToken = localStorage.getItem('token');
+const avatarKey = localStorage.getItem('AVATAR_KEY');
+const bannerPfp = document.getElementById('bannerPfp');
+console.log(currentUser);
+console.log(userToken);
+
 if (currentUser !== null) {
+  document.getElementById('userName').innerHTML = currentUser.username;
+}
+
+if (avatarKey !== null) {
   try {
-    document.getElementById('userName').innerHTML = currentUser.data.username;
-    const bannerPfp = document.getElementById('bannerPfp');
-    bannerPfp.src = await getAvatar(localStorage.getItem('AVATAR_KEY'));
+    bannerPfp.src = await getAvatar(avatarKey);
   } catch (error) {
     console.log(error);
   }
@@ -23,13 +29,7 @@ navigator.geolocation.getCurrentPosition((position) => {
 });
 
 const processRestaurants = async () => {
-  const restaurants = await fetchData(baseUrl);
-
-  restaurants.sort((a, b) =>
-    a.name.toLowerCase().trim().localeCompare(b.name.toLowerCase().trim())
-  );
-
-  return restaurants;
+  return await fetchData(baseUrl);
 };
 
 // I know this function is a piece of shit, but it works so w.e
@@ -105,4 +105,4 @@ userProfile.addEventListener('click', () => {
   window.location.href = '../profile/profile.html';
 });
 
-sortRestaurants('all');
+await sortRestaurants('all');

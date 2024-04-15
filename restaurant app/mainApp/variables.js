@@ -57,8 +57,8 @@ const userLogin = async (username, password) => {
 
     const responseData = await response.json();
     if (response.ok) {
-      await localStorage.setItem('user', JSON.stringify(responseData));
-      console.log(responseData);
+      await localStorage.setItem('user', JSON.stringify(responseData.data));
+      await localStorage.setItem('token', responseData.token);
       return responseData;
     } else {
       throw new Error(responseData.message || 'Failed to log in.');
@@ -84,8 +84,6 @@ const createUser = async (userData) => {
     const responseData = await response.json();
     if (response.ok) {
       console.log('New user created successfully:', responseData);
-      await localStorage.setItem('user', JSON.stringify(responseData));
-      await localStorage.setItem('token', responseData.token);
       return responseData;
     } else {
       throw new Error(`Failed to create new user: ${responseData.message}`);
@@ -136,7 +134,8 @@ const updateUser = async (userData, accessToken) => {
 
     const responseData = await response.json();
     if (response.ok) {
-      await localStorage.setItem('user', JSON.stringify(responseData));
+      console.log(responseData);
+      await localStorage.setItem('user', JSON.stringify(responseData.data));
       return responseData;
     }
   } catch (error) {
