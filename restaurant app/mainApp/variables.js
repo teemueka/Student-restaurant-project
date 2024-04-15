@@ -144,6 +144,30 @@ const updateUser = async (userData, accessToken) => {
   }
 };
 
+const deleteUser = async (accessToken) => {
+  const url = 'https://10.120.32.94/restaurant/api/v1/users';
+
+  try {
+    const response = await fetch(url, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    const responseData = await response.json();
+    if (response.ok) {
+      localStorage.clear();
+      console.log(responseData);
+      return responseData;
+    }
+  } catch (error) {
+    console.error('Error updating user information:', error.message);
+    throw error;
+  }
+};
+
 const uploadAvatar = async (avatarFile, jwtToken) => {
   const url = 'https://10.120.32.94/restaurant/api/v1/users/avatar';
 
@@ -204,4 +228,5 @@ export {
   createUser,
   checkUsernameAvailability,
   updateUser,
+  deleteUser,
 };

@@ -3,6 +3,7 @@ import {
   uploadAvatar,
   checkUsernameAvailability,
   getAvatar,
+  deleteUser,
 } from '../mainApp/variables.js';
 
 const currentUser = JSON.parse(localStorage.getItem('user'));
@@ -19,6 +20,7 @@ if (currentUser === null) {
 const deleteButton = document.getElementById('delete');
 const photoInput = document.getElementById('photo');
 const avatars = document.querySelectorAll('.avatar');
+const modal = document.querySelector('dialog');
 
 photoInput.addEventListener('change', async (evt) => {
   const avatarFile = evt.target.files[0];
@@ -88,5 +90,14 @@ document.getElementById('header').addEventListener('click', () => {
 });
 
 deleteButton.addEventListener('click', async () => {
-  console.log('aaaaaaaaaaaaaaaaaaa');
+  modal.show();
+});
+
+document.getElementById('dontDelete').addEventListener('click', async () => {
+  modal.close();
+});
+document.getElementById('deleteUser').addEventListener('click', async () => {
+  await deleteUser(userToken);
+  modal.close();
+  location.reload();
 });

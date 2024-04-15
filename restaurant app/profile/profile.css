@@ -70,13 +70,31 @@ body {
 
 #mainContainer {
   background-color: whitesmoke;
-  width: 700px;
-  height: 550px;
+  width: 60vw;
+  height: auto;
   margin: 5vh auto 0 auto;
   padding: 20px;
   border-radius: 4px;
   font-size: 12px;
   box-shadow: 8px 8px 10px rgb(0 0 0 / 50%);
+}
+
+.delete {
+  background-color: #e5d8d8;
+}
+
+.delete:hover {
+  background-color: #e1a2a2;
+}
+
+.modal {
+  background-color: whitesmoke;
+  top: 50vh;
+}
+
+.modal button {
+  width: 100%;
+  margin-top: 0.2rem;
 }
 
 #updateUserForm {
