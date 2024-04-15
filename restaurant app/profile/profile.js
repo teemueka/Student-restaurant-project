@@ -5,6 +5,11 @@ import {
   getAvatar,
   deleteUser,
 } from '../mainApp/variables.js';
+import {
+  validateUsername,
+  validateEmail,
+  validatePassword,
+} from '../mainApp/validators.js';
 
 const currentUser = JSON.parse(localStorage.getItem('user'));
 const userToken = localStorage.getItem('token');
@@ -44,13 +49,48 @@ document.addEventListener('DOMContentLoaded', () => {
     e.preventDefault();
 
     const username = document.getElementById('profileUsername').value;
-    const email = document.getElementById('profileEmail').value;
-    const password = document.getElementById('profilePassword').value;
+    const email = document.getElementById('profileEmail').value.trim();
+    const password = document.getElementById('profilePassword').value.trim();
 
-    try {
-      await checkUsernameAvailability(username);
-    } catch (error) {
-      console.log('username not available', error);
+    let hasErrors = false;
+
+    if (!validateUsername(username)) {
+      document.getElementById('username-error').innerHTML =
+        '<p>Username must be at least 5 characters long</p>';
+      hasErrors = true;
+    } else {
+      try {
+        const isAvailable = await checkUsernameAvailability(username);
+        document.getElementById('username-error').innerHTML = '';
+
+        if (!isAvailable) {
+          document.getElementById('username-error').innerHTML =
+            '<p>Username already taken</p>';
+          hasErrors = true;
+        }
+      } catch (error) {
+        document.getElementById('username-error').innerHTML =
+          '<p>Error validating username</p>';
+        hasErrors = true;
+      }
+    }
+
+    if (!validateEmail(email)) {
+      document.getElementById('email-error').innerHTML = '<p>Invalid email</p>';
+      hasErrors = true;
+    } else {
+      document.getElementById('email-error').innerHTML = '';
+    }
+
+    if (!validatePassword(password)) {
+      document.getElementById('password-error').innerHTML =
+        '<p>Password must contain 8 characters and a number</p>';
+      hasErrors = true;
+    } else {
+      document.getElementById('password-error').innerHTML = '';
+    }
+
+    if (hasErrors) {
       return;
     }
 

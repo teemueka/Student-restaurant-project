@@ -3,6 +3,11 @@ import {
   userLogin,
   createUser,
 } from '../mainApp/variables.js';
+import {
+  validateUsername,
+  validatePassword,
+  validateEmail,
+} from '../mainApp/validators';
 
 const currentUser = JSON.parse(localStorage.getItem('user'));
 const userToken = localStorage.getItem('token');
@@ -25,13 +30,25 @@ form.addEventListener('submit', async (event) => {
     const password = regPasswordInput.value.trim();
     let hasErrors = false;
 
-    try {
-      await validateUsername(username);
-    } catch (error) {
+    if (!validateUsername(username)) {
       document.getElementById('username-error').innerHTML =
-        '<p>Username is already taken</p>';
-      console.error('Error validating username:', error.message);
+        '<p>Username must be at least 5 characters long</p>';
       hasErrors = true;
+    } else {
+      try {
+        const isAvailable = await checkUsernameAvailability(username);
+        document.getElementById('username-error').innerHTML = '';
+
+        if (!isAvailable) {
+          document.getElementById('username-error').innerHTML =
+            '<p>Username already taken</p>';
+          hasErrors = true;
+        }
+      } catch (error) {
+        document.getElementById('username-error').innerHTML =
+          '<p>Error validating username</p>';
+        hasErrors = true;
+      }
     }
 
     if (!validateEmail(email)) {
@@ -78,36 +95,6 @@ form.addEventListener('submit', async (event) => {
     }
   }
 });
-
-const validateUsername = async (username) => {
-  const regex = /^.{5,}$/;
-  const isUsernameValid = regex.test(username);
-
-  if (!isUsernameValid) {
-    document.getElementById('username-error').innerHTML =
-      '<p>Username must be at least 5 characters long</p>';
-    return;
-  }
-
-  const isAvailable = await checkUsernameAvailability(username); // Check username availability
-  document.getElementById('username-error').innerHTML = '';
-
-  if (!isAvailable) {
-    document.getElementById('username-error').innerHTML =
-      '<p>Username already taken</p>';
-  }
-};
-
-const validateEmail = (email) => {
-  const regex =
-    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-  return regex.test(email);
-};
-
-const validatePassword = (password) => {
-  const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-  return regex.test(password);
-};
 
 const handleRegistration = async (userData) => {
   try {

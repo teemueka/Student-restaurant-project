@@ -79,6 +79,11 @@ body {
   box-shadow: 8px 8px 10px rgb(0 0 0 / 50%);
 }
 
+.error p {
+  margin-top: 0;
+  color: red;
+}
+
 .delete {
   background-color: #e5d8d8;
 }
