@@ -10,20 +10,37 @@ const restaurantModal = (restaurant, menu) => {
   menuHtml += phone && phone !== '-' ? `<p>${phone}</p>` : '';
   menuHtml += company ? `<p>${company}</p>` : '';
 
-  menu.days.forEach((day) => {
-    menuHtml += `<h2>${day.date}</h2>`;
-    if (day.courses.length === 0) {
-      menuHtml += `<p>No courses available for this day</p>`;
-    } else {
-      day.courses.forEach((course) => {
+  if (menu.days === undefined) {
+    menuHtml += `<h2>Today's menu</h2>`;
+    if (menu.courses.length !== 0) {
+      console.log('daily menu');
+      menu.courses.forEach((course) => {
         const price = course.price ? ` - Price: ${course.price}` : '';
         const diets = course.diets ? ` - Diets: ${course.diets}` : '';
         const menuItem = `<p>${course.name}${price}${diets}</p>`;
         menuHtml += menuItem;
       });
+    } else {
+      menuHtml += `<p>No courses available for this day</p>`;
     }
-  });
-  return menuHtml;
+    return menuHtml;
+
+  } else {
+    menu.days.forEach((day) => {
+      menuHtml += `<h2>${day.date}</h2>`;
+      if (day.courses.length === 0) {
+        menuHtml += `<p>No courses available for this day</p>`;
+      } else {
+        day.courses.forEach((course) => {
+          const price = course.price ? ` - Price: ${course.price}` : '';
+          const diets = course.diets ? ` - Diets: ${course.diets}` : '';
+          const menuItem = `<p>${course.name}${price}${diets}</p>`;
+          menuHtml += menuItem;
+        });
+      }
+    });
+    return menuHtml;
+  }
 };
 
 export {restaurantModal};

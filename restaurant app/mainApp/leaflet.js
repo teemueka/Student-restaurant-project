@@ -1,5 +1,9 @@
+import { restaurantModal } from "./components.js";
+import { dailyMenu, weeklyMenu } from "./variables.js";
+
 let map;
 let markers = [];
+const modal = document.querySelector('dialog');
 
 const userIcon = L.icon({
   iconUrl: '../images/marker-icon-red.png',
@@ -45,13 +49,38 @@ const addMarkers = (restaurants) => {
         restaurant.location.coordinates[0],
       ]).addTo(map);
 
-      const popup = `<b>${restaurant.name}</b><br>${restaurant.address}<br>Distance: ${distance.toFixed(2)} km<br><button id="dailyMenu">days menu</button><button id="weekMenu">weeks menu</button>`;
+      const popup = `<b>${restaurant.name}</b>
+                     <br>${restaurant.address}
+                     <br>Distance: ${distance.toFixed(2)} km`;
 
       if (distance < minDistance) {
         minDistance = distance;
         nearestMarker = marker;
       }
       marker.bindPopup(popup);
+
+      const closeBtn = document.createElement('button');
+      closeBtn.innerText = 'Close';
+      closeBtn.id = 'close-button';
+      closeBtn.addEventListener('click', () => {
+        modal.close();
+      });
+
+      const weeklyBtn = document.createElement('button');
+      weeklyBtn.innerText = 'This weeks menu';
+      weeklyBtn.id = 'toWeekly';
+      weeklyBtn.addEventListener('click', async () => {
+        const menu = await weeklyMenu(restaurant._id);
+        modal.innerHTML = restaurantModal(restaurant, menu);
+      });
+
+      marker.addEventListener('click', async () => {
+        const menu = await dailyMenu(restaurant._id);
+        modal.innerHTML = restaurantModal(restaurant, menu);
+        modal.appendChild(weeklyBtn);
+        modal.appendChild(closeBtn);
+        modal.show();
+      });
       markers.push(marker);
     });
 
@@ -88,9 +117,7 @@ const calculateDistance = (lat1, lon1, lat2, lon2) => {
       Math.sin(dLon / 2) *
       Math.sin(dLon / 2);
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  const distance = R * c;
-  return distance;
+  return R * c;
 };
-
 
 export {initializeMap, addMarkers, calculateDistance};

@@ -33,10 +33,7 @@ body {
 
 .extras {
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
   display: flex;
-  align-items: center;
 }
 
 #userName {
@@ -56,7 +53,6 @@ body {
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  object-fit: cover;
   transition: transform 0.3s ease;
 }
 
@@ -72,7 +68,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 600px;
+  height: 70vh;
 }
 
 #map {
@@ -82,48 +78,8 @@ body {
   box-shadow: 5px 5px 5px rgb(0 0 0 / 50%)
 }
 
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-  margin: 0;
-  padding: 0;
-}
-
-th {
-  background-color: #f0f0f0;
-  border-bottom: 1px solid #ccc;
-  font-weight: normal;
-  padding: 0.5em 1em;
-  text-align: left;
-}
-
-td {
-  border-bottom: 1px solid #ccc;
-  padding: 0.5em 1em;
-}
-
-.highlight {
-  background-color: #2e1ae2;
-  font-weight: 900;
-}
-
-.modal {
-  background-color: rgb(201, 198, 241);
-  box-shadow: 5px 5px 10px rgb(0 0 0 / 50%);
-}
-
-
-#close-button {
-  background-color: rgb(113, 118, 154);
-  font-weight: 900;
-}
-
-#close-button:hover {
-  background-color: rgb(93, 95, 107);
-}
-
 #buttons {
-  margin-bottom: 2em;
+  margin-bottom: 1em;
 }
 
 #banner {
@@ -155,3 +111,15 @@ button {
   color: red;
   margin: 0;
 }
+
+.modal {
+  height: 70vh;
+  max-width: 75%;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
