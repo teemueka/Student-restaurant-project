@@ -7,7 +7,7 @@ import {
   validateUsername,
   validatePassword,
   validateEmail,
-} from '../mainApp/validators';
+} from '../mainApp/validators.js';
 
 const currentUser = JSON.parse(localStorage.getItem('user'));
 const userToken = localStorage.getItem('token');
@@ -140,7 +140,7 @@ const registration = () => {
   document.getElementById('switchToLogin').addEventListener('click', login);
 };
 
-const login = () => {
+const login = () => {0
   form.innerHTML = `
     <h1>Login</h1>
     <div class="input-control">
