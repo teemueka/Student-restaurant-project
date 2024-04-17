@@ -59,19 +59,21 @@ document.addEventListener('DOMContentLoaded', () => {
         '<p>Username must be at least 5 characters long</p>';
       hasErrors = true;
     } else {
-      try {
-        const isAvailable = await checkUsernameAvailability(username);
-        document.getElementById('username-error').innerHTML = '';
+      if (currentUser.username !== username) {
+        try {
+          const isAvailable = await checkUsernameAvailability(username);
+          document.getElementById('username-error').innerHTML = '';
 
-        if (!isAvailable) {
+          if (!isAvailable) {
+            document.getElementById('username-error').innerHTML =
+              '<p>Username already taken</p>';
+            hasErrors = true;
+          }
+        } catch (error) {
           document.getElementById('username-error').innerHTML =
-            '<p>Username already taken</p>';
+            '<p>Error validating username</p>';
           hasErrors = true;
         }
-      } catch (error) {
-        document.getElementById('username-error').innerHTML =
-          '<p>Error validating username</p>';
-        hasErrors = true;
       }
     }
 
