@@ -1,5 +1,5 @@
-import { restaurantModal } from "./components.js";
-import { dailyMenu, weeklyMenu } from "./variables.js";
+import {restaurantModal} from './components.js';
+import {dailyMenu, weeklyMenu} from './variables.js';
 
 let map;
 let markers = [];
@@ -66,12 +66,24 @@ const addMarkers = (restaurants) => {
         modal.close();
       });
 
+      const dailyBtn = document.createElement('button');
+      dailyBtn.innerText = "Today's menu";
+      dailyBtn.id = 'toDaily';
+      dailyBtn.addEventListener('click', async () => {
+        const menu = await dailyMenu(restaurant._id);
+        modal.innerHTML = restaurantModal(restaurant, menu);
+        modal.appendChild(weeklyBtn);
+        modal.appendChild(closeBtn);
+      });
+
       const weeklyBtn = document.createElement('button');
       weeklyBtn.innerText = 'This weeks menu';
       weeklyBtn.id = 'toWeekly';
       weeklyBtn.addEventListener('click', async () => {
         const menu = await weeklyMenu(restaurant._id);
         modal.innerHTML = restaurantModal(restaurant, menu);
+        modal.appendChild(dailyBtn);
+        modal.appendChild(closeBtn);
       });
 
       marker.addEventListener('click', async () => {

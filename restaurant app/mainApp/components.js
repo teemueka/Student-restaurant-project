@@ -13,7 +13,6 @@ const restaurantModal = (restaurant, menu) => {
   if (menu.days === undefined) {
     menuHtml += `<h2>Today's menu</h2>`;
     if (menu.courses.length !== 0) {
-      console.log('daily menu');
       menu.courses.forEach((course) => {
         const price = course.price ? ` - Price: ${course.price}` : '';
         const diets = course.diets ? ` - Diets: ${course.diets}` : '';
@@ -24,7 +23,6 @@ const restaurantModal = (restaurant, menu) => {
       menuHtml += `<p>No courses available for this day</p>`;
     }
     return menuHtml;
-
   } else {
     menu.days.forEach((day) => {
       menuHtml += `<h2>${day.date}</h2>`;
