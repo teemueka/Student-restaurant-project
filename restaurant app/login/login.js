@@ -140,7 +140,7 @@ const registration = () => {
   document.getElementById('switchToLogin').addEventListener('click', login);
 };
 
-const login = () => {0
+const login = () => {
   form.innerHTML = `
     <h1>Login</h1>
     <div class="input-control">
