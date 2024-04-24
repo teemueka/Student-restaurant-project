@@ -4,6 +4,7 @@ import {
   checkUsernameAvailability,
   getAvatar,
   deleteUser,
+  getCurrentUserByToken,
 } from '../mainApp/variables.js';
 import {
   validateUsername,
@@ -14,6 +15,7 @@ import {
 const currentUser = JSON.parse(localStorage.getItem('user'));
 const userToken = localStorage.getItem('token');
 const avatarKey = localStorage.getItem('AVATAR_KEY');
+const currentUserByToken = await getCurrentUserByToken(userToken);
 console.log('avatar_key', avatarKey);
 console.log('currentUser', currentUser);
 console.log('token', userToken);
@@ -123,10 +125,21 @@ if (currentUser !== null) {
 if (avatarKey !== null) {
   const avatars = document.querySelectorAll('.avatar');
   for (const pfp of avatars) {
-    pfp.src = await getAvatar(avatarKey);
+    try {
+      pfp.src = await getAvatar(avatarKey);
+    } catch (e) {
+      console.log(e.message);
+    }
+  }
+} else {
+  for (const pfp of avatars) {
+    try {
+      pfp.src = await getAvatar(currentUserByToken.avatar);
+    } catch (e) {
+      console.log(e.message);
+    }
   }
 }
-
 document.getElementById('header').addEventListener('click', () => {
   window.location.href = '../../restaurant app/mainApp/main.html';
 });
