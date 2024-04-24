@@ -1,3 +1,16 @@
+const weekday = [
+  'maanantai',
+  'tiistai',
+  'keskiviikko',
+  'torstai',
+  'perjantai',
+  'lauantai',
+  'sunnuntai'
+];
+
+const d = new Date();
+const currentDayIndex = (d.getDay() + 6) % 7;
+
 const restaurantModal = (restaurant, menu) => {
   const {name, address, postalCode, city, phone, company} = restaurant;
 
@@ -22,9 +35,11 @@ const restaurantModal = (restaurant, menu) => {
     } else {
       menuHtml += `<p>No courses available for this day</p>`;
     }
-    return menuHtml;
   } else {
-    menu.days.forEach((day) => {
+    const orderedDays = menu.days.slice(currentDayIndex)
+      .concat(menu.days.slice(0, currentDayIndex));
+
+    orderedDays.forEach((day) => {
       menuHtml += `<h2>${day.date}</h2>`;
       if (day.courses.length === 0) {
         menuHtml += `<p>No courses available for this day</p>`;
@@ -37,8 +52,8 @@ const restaurantModal = (restaurant, menu) => {
         });
       }
     });
-    return menuHtml;
   }
+  return menuHtml;
 };
 
 export {restaurantModal};
