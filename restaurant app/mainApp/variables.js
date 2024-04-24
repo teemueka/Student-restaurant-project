@@ -163,7 +163,7 @@ const deleteUser = async (accessToken) => {
       return responseData;
     }
   } catch (error) {
-    console.error('Error updating user information:', error.message);
+    console.error('Error deleting user:', error.message);
     throw error;
   }
 };
