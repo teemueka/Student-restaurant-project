@@ -1,5 +1,5 @@
 import {baseUrl} from './utils.js';
-import {fetchData, getAvatar, getCurrentUserByToken} from "./variables.js";
+import {fetchData, getAvatar, getCurrentUserByToken} from './variables.js';
 import {initializeMap, addMarkers, calculateDistance} from './leaflet.js';
 
 const currentUser = JSON.parse(localStorage.getItem('user'));
@@ -10,17 +10,18 @@ const bannerPfp = document.getElementById('bannerPfp');
 
 if (currentUser !== null) {
   document.getElementById('userName').innerHTML = currentUser.username;
-} else {
-  window.location = '../login/login.html';
 }
 
 console.log(currentUser);
 console.log(userToken);
 console.log(avatarKey);
 console.log(currentUserByToken);
-
-console.log(currentUser.avatar);
-console.log(currentUserByToken.avatar);
+try {
+  console.log(currentUser.avatar);
+  console.log(currentUserByToken.avatar);
+} catch (e) {
+  console.log(e.message);
+}
 
 if (avatarKey !== null) {
   try {
@@ -117,7 +118,7 @@ distanceSort.addEventListener('click', async () => {
 
 const logout = () => {
   localStorage.clear();
-  location.reload();
+  window.location = '../login/login.html';
 };
 
 document.getElementById('logoutDrop').addEventListener('click', logout);
