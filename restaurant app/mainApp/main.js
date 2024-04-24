@@ -1,23 +1,38 @@
 import {baseUrl} from './utils.js';
-import {fetchData, weeklyMenu, dailyMenu, getAvatar} from './variables.js';
+import {fetchData, getAvatar, getCurrentUserByToken} from "./variables.js";
 import {initializeMap, addMarkers, calculateDistance} from './leaflet.js';
 
 const currentUser = JSON.parse(localStorage.getItem('user'));
 const userToken = localStorage.getItem('token');
+const currentUserByToken = await getCurrentUserByToken(userToken);
 const avatarKey = localStorage.getItem('AVATAR_KEY');
 const bannerPfp = document.getElementById('bannerPfp');
-console.log(currentUser);
-console.log(userToken);
 
 if (currentUser !== null) {
   document.getElementById('userName').innerHTML = currentUser.username;
+} else {
+  window.location = '../login/login.html';
 }
+
+console.log(currentUser);
+console.log(userToken);
+console.log(avatarKey);
+console.log(currentUserByToken);
+
+console.log(currentUser.avatar);
+console.log(currentUserByToken.avatar);
 
 if (avatarKey !== null) {
   try {
     bannerPfp.src = await getAvatar(avatarKey);
   } catch (error) {
     console.log(error);
+  }
+} else {
+  try {
+    bannerPfp.src = await getAvatar(currentUserByToken.avatar);
+  } catch (e) {
+    console.log(e.message);
   }
 }
 
@@ -99,5 +114,12 @@ distanceSort.addEventListener('click', async () => {
     distanceError.innerHTML = '<p>Invalid distance</p>';
   }
 });
+
+const logout = () => {
+  localStorage.clear();
+  location.reload();
+};
+
+document.getElementById('logoutDrop').addEventListener('click', logout);
 
 await sortRestaurants('all');

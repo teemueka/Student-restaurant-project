@@ -195,6 +195,28 @@ const uploadAvatar = async (avatarFile, jwtToken) => {
   }
 };
 
+const getCurrentUserByToken = async (accessToken) => {
+  const url = `https://10.120.32.94/restaurant/api/v1/users/token`;
+
+  try {
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    const responseData = await response.json();
+    if (response.ok) {
+      console.log('getting user by token success');
+      return responseData;
+    }
+  } catch (error) {
+    console.log('error getting current user', error.message);
+  };
+
+};
+
 const getAvatar = async (avatarKey) => {
   const url = `https://10.120.32.94/restaurant/uploads/${avatarKey}`;
 
@@ -229,4 +251,5 @@ export {
   checkUsernameAvailability,
   updateUser,
   deleteUser,
+  getCurrentUserByToken,
 };

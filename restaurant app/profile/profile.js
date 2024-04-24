@@ -143,3 +143,10 @@ document.getElementById('deleteUser').addEventListener('click', async () => {
   modal.close();
   location.reload();
 });
+
+const logout = () => {
+  localStorage.clear();
+  location.reload();
+};
+
+document.getElementById('logoutDrop').addEventListener('click', logout);
