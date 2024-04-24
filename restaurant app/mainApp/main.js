@@ -100,9 +100,4 @@ distanceSort.addEventListener('click', async () => {
   }
 });
 
-const userProfile = document.getElementById('profile');
-userProfile.addEventListener('click', () => {
-  window.location.href = '../profile/profile.html';
-});
-
 await sortRestaurants('all');

@@ -15,25 +15,28 @@ body {
   padding: 0;
   background-attachment: fixed;
   background-size: cover;
+  overflow-x: hidden;
 }
 
 #banner {
-  background-color: black;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  position: relative;
   padding: 0 20px;
+  background-color: black;
 }
 
 #banner h1 {
+  flex-grow: 1;
+  text-align: center;
   color: whitesmoke;
-  z-index: 2;
+  padding: 0 20px;
 }
 
 .extras {
-  position: absolute;
   display: flex;
+  flex: 1;
+  justify-content: center;
 }
 
 #userName {
@@ -42,10 +45,12 @@ body {
 }
 
 .extras.left {
+  justify-content: flex-start;
   left: 20px;
 }
 
 .extras.right {
+  justify-content: flex-end;
   right: 20px;
 }
 
@@ -58,10 +63,6 @@ body {
 
 #bannerPfp:hover {
   transform: scale(1.1);
-}
-
-#bannerPfp {
-  cursor: pointer;
 }
 
 #map-container {
@@ -123,3 +124,32 @@ button {
   z-index: 1000;
 }
 
+.dropDown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropDown-content {
+  display: none;
+  position: absolute;
+  background-color: whitesmoke;
+  min-width: 7rem;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.dropDown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropDown-content a:hover {background-color: #9b9999}
+
+.dropDown:hover .dropDown-content {
+  display: block;
+}
