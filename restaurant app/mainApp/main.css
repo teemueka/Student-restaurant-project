@@ -1,10 +1,3 @@
-/* --black: #000000ff;
---oxford-blue: #14213dff;
---cinereous: #8a716aff;
---silver: #c2b8b2ff;
---honolulu-blue: #197bbdff; */
-
-/*TODO: CSS STYLING BASED ON CURRENT USER SCREEN SIZE */
 body {
   background-image: linear-gradient(45deg, #14213dff, #197bbdff, #360559);
   min-height: 100vh;

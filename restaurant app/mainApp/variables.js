@@ -168,17 +168,16 @@ const deleteUser = async (accessToken) => {
   }
 };
 
-const uploadAvatar = async (avatarFile, jwtToken) => {
+const uploadAvatar = async (avatarFile, token) => {
   const url = 'https://10.120.32.94/restaurant/api/v1/users/avatar';
 
   const formData = new FormData();
   formData.append('avatar', avatarFile);
-
   try {
     const response = await fetch(url, {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${jwtToken}`,
+        Authorization: `Bearer ${token}`,
       },
       body: formData,
     });
@@ -213,8 +212,7 @@ const getCurrentUserByToken = async (accessToken) => {
     }
   } catch (error) {
     console.log('error getting current user', error.message);
-  };
-
+  }
 };
 
 const getAvatar = async (avatarKey) => {

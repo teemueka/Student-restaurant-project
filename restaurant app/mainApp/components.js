@@ -1,13 +1,3 @@
-const weekday = [
-  'maanantai',
-  'tiistai',
-  'keskiviikko',
-  'torstai',
-  'perjantai',
-  'lauantai',
-  'sunnuntai'
-];
-
 const d = new Date();
 const currentDayIndex = (d.getDay() + 6) % 7;
 
@@ -36,7 +26,8 @@ const restaurantModal = (restaurant, menu) => {
       menuHtml += `<p>No courses available for this day</p>`;
     }
   } else {
-    const orderedDays = menu.days.slice(currentDayIndex)
+    const orderedDays = menu.days
+      .slice(currentDayIndex)
       .concat(menu.days.slice(0, currentDayIndex));
 
     orderedDays.forEach((day) => {
