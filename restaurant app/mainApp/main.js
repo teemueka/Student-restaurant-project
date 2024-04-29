@@ -10,6 +10,10 @@ const bannerPfp = document.getElementById('bannerPfp');
 
 if (currentUser !== null) {
   document.getElementById('userName').innerHTML = currentUser.username;
+} else {
+  const dropDown = document.querySelector('.dropDown-content');
+  dropDown.innerHTML = '';
+  dropDown.innerHTML = `<a id="noUser" href="../login/login.html">Login</a>`;
 }
 
 console.log(currentUser);
