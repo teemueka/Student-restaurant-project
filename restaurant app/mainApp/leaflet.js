@@ -5,8 +5,11 @@ let map;
 let markers = [];
 const modal = document.querySelector('dialog');
 
-const user = localStorage.getItem('user');
+const user = JSON.parse(localStorage.getItem('user'));
+console.log(user);
 const token = localStorage.getItem('token');
+const userFavourite = user.favouriteRestaurant;
+console.log(userFavourite);
 
 const userIcon = L.icon({
   iconUrl: '../images/marker-icon-red.png',
@@ -38,6 +41,7 @@ const addMarkers = (restaurants) => {
 
     let minDistance = Infinity;
     let nearestMarker = null;
+    let favourite = null;
 
     restaurants.forEach((restaurant) => {
       const distance = calculateDistance(
@@ -55,6 +59,15 @@ const addMarkers = (restaurants) => {
       const popup = `<b>${restaurant.name}</b>
                      <br>${restaurant.address}
                      <br>Distance: ${distance.toFixed(2)} km`;
+
+      if (restaurant._id === userFavourite) {
+        marker.setIcon(
+          L.icon({
+            iconUrl: '../images/marker-icon-green.png',
+            iconSize: [25, 41],
+          })
+        );
+      }
 
       if (distance < minDistance) {
         minDistance = distance;
@@ -101,6 +114,13 @@ const addMarkers = (restaurants) => {
 
       favouriteBtn.addEventListener('click', async () => {
         await updateUser(userData, token);
+        favourite = marker;
+        favourite.setIcon(
+          L.icon({
+            iconUrl: '../images/marker-icon-green.png',
+            iconSize: [25, 41],
+          })
+        );
       });
 
       marker.addEventListener('click', async () => {
