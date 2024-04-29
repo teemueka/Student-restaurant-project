@@ -1,9 +1,12 @@
 import {restaurantModal} from './components.js';
-import {dailyMenu, weeklyMenu} from './variables.js';
+import {dailyMenu, updateUser, weeklyMenu} from './variables.js';
 
 let map;
 let markers = [];
 const modal = document.querySelector('dialog');
+
+const user = localStorage.getItem('user');
+const token = localStorage.getItem('token');
 
 const userIcon = L.icon({
   iconUrl: '../images/marker-icon-red.png',
@@ -72,6 +75,7 @@ const addMarkers = (restaurants) => {
       dailyBtn.addEventListener('click', async () => {
         const menu = await dailyMenu(restaurant._id);
         modal.innerHTML = restaurantModal(restaurant, menu);
+        user ? modal.appendChild(favouriteBtn) : '';
         modal.appendChild(weeklyBtn);
         modal.appendChild(closeBtn);
       });
@@ -82,13 +86,27 @@ const addMarkers = (restaurants) => {
       weeklyBtn.addEventListener('click', async () => {
         const menu = await weeklyMenu(restaurant._id);
         modal.innerHTML = restaurantModal(restaurant, menu);
+        user ? modal.appendChild(favouriteBtn) : '';
         modal.appendChild(dailyBtn);
         modal.appendChild(closeBtn);
+      });
+
+      const favouriteBtn = document.createElement('button');
+      favouriteBtn.innerText = 'Favourite';
+      favouriteBtn.id = 'favouriteBtn';
+
+      const userData = {
+        favouriteRestaurant: restaurant._id,
+      };
+
+      favouriteBtn.addEventListener('click', async () => {
+        await updateUser(userData, token);
       });
 
       marker.addEventListener('click', async () => {
         const menu = await dailyMenu(restaurant._id);
         modal.innerHTML = restaurantModal(restaurant, menu);
+        user ? modal.appendChild(favouriteBtn) : '';
         modal.appendChild(weeklyBtn);
         modal.appendChild(closeBtn);
         modal.show();
