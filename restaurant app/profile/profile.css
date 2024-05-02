@@ -29,6 +29,11 @@ body {
   text-align: center;
   color: whitesmoke;
   padding: 0 20px;
+  cursor: pointer;
+}
+
+#banner h1:hover {
+  color: #868080;
 }
 
 .extras {
@@ -65,10 +70,11 @@ body {
 }
 
 #mainContainer {
+  min-width: 20vh;
   background-color: whitesmoke;
-  width: 60vw;
+  max-width: 30vw;
   height: auto;
-  margin: 5vh auto 0 auto;
+  margin: 3vh auto 0 auto;
   padding: 20px;
   border-radius: 4px;
   font-size: 12px;
@@ -110,20 +116,27 @@ body {
 }
 
 #updateUserForm button {
-  padding: 10px;
-  margin-top: 10px;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
   width: 100%;
+}
+
+#delete.delete {
+  margin: 0;
 }
 
 .profile-inputs {
   display: flex;
   flex-direction: column;
-  padding-top: 15px;
+}
+
+#photo {
+  margin-bottom: 0.5rem;
 }
 
 #profilePicture {
-  width: 50%;
-  height: 50%;
+  max-width: 150px;
+  max-height: 150px;
   border-radius: 50%;
   padding: 20px;
 }

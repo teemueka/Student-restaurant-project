@@ -63,6 +63,7 @@ body {
   justify-content: center;
   align-items: center;
   height: 70vh;
+  margin-bottom: 2rem;
 }
 
 #map {
@@ -107,12 +108,12 @@ button {
 }
 
 .modal {
-  height: 70vh;
+  max-height: 70vh;
   max-width: 75%;
-  position: fixed;
-  transform: translate(-50%, -50%);
+  position: absolute;
   top: 50%;
   left: 50%;
+  transform: translate(-50%, -50%);
   overflow-y: auto;
   z-index: 1000;
 }

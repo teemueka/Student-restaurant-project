@@ -10,9 +10,6 @@ import {
 } from '../mainApp/validators.js';
 
 const currentUser = JSON.parse(localStorage.getItem('user'));
-const userToken = localStorage.getItem('token');
-console.log(currentUser);
-console.log(userToken);
 const form = document.getElementById('form');
 form.addEventListener('submit', async (event) => {
   event.preventDefault();
