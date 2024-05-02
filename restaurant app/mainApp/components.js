@@ -1,6 +1,3 @@
-const d = new Date();
-const currentDayIndex = (d.getDay() + 6) % 7;
-
 const restaurantModal = (restaurant, menu) => {
   const {name, address, postalCode, city, phone, company} = restaurant;
 
@@ -26,11 +23,7 @@ const restaurantModal = (restaurant, menu) => {
       menuHtml += `<p>No courses available for this day</p>`;
     }
   } else {
-    const orderedDays = menu.days
-      .slice(currentDayIndex)
-      .concat(menu.days.slice(0, currentDayIndex));
-
-    orderedDays.forEach((day) => {
+    menu.days.forEach((day) => {
       menuHtml += `<h2>${day.date}</h2>`;
       if (day.courses.length === 0) {
         menuHtml += `<p>No courses available for this day</p>`;
