@@ -45,7 +45,7 @@ photoInput.addEventListener('change', async (evt) => {
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('updateUserForm');
 
-  form.addEventListener('submit', async function (e) {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const username = document.getElementById('profileUsername').value;
@@ -160,4 +160,4 @@ const logout = () => {
   location.reload();
 };
 
-document.getElementById('logoutDrop').addEventListener('click', logout);
+document.getElementById('logoutDropProfile').addEventListener('click', logout);
