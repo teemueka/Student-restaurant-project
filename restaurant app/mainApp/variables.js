@@ -207,7 +207,6 @@ const getCurrentUserByToken = async (accessToken) => {
     });
     const responseData = await response.json();
     if (response.ok) {
-      console.log('getting user by token success');
       return responseData;
     }
   } catch (error) {
@@ -233,7 +232,6 @@ const getAvatar = async (avatarKey) => {
       throw new Error('Failed to fetch avatar image');
     }
   } catch (error) {
-    console.error('Error fetching avatar:', error);
     throw error;
   }
 };

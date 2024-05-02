@@ -4,12 +4,7 @@ import {dailyMenu, updateUser, weeklyMenu} from './variables.js';
 let map;
 let markers = [];
 const modal = document.querySelector('dialog');
-
-const user = JSON.parse(localStorage.getItem('user'));
-console.log(user);
 const token = localStorage.getItem('token');
-const userFavourite = user.favouriteRestaurant;
-console.log(userFavourite);
 
 const userIcon = L.icon({
   iconUrl: '../images/marker-icon-red.png',
@@ -32,7 +27,10 @@ const initializeMap = (userLatitude, userLongitude) => {
   user.bindPopup(userPopup);
 };
 
+let favourite;
+
 const addMarkers = (restaurants) => {
+  const user = JSON.parse(localStorage.getItem('user'));
   removeMarkers();
 
   navigator.geolocation.getCurrentPosition((position) => {
@@ -41,7 +39,6 @@ const addMarkers = (restaurants) => {
 
     let minDistance = Infinity;
     let nearestMarker = null;
-    let favourite = null;
 
     restaurants.forEach((restaurant) => {
       const distance = calculateDistance(
@@ -60,13 +57,17 @@ const addMarkers = (restaurants) => {
                      <br>${restaurant.address}
                      <br>Distance: ${distance.toFixed(2)} km`;
 
-      if (restaurant._id === userFavourite) {
-        marker.setIcon(
-          L.icon({
-            iconUrl: '../images/marker-icon-green.png',
-            iconSize: [25, 41],
-          })
-        );
+      try {
+        if (user !== null && restaurant._id === user.favouriteRestaurant) {
+          marker.setIcon(
+            L.icon({
+              iconUrl: '../images/marker-icon-green.png',
+              iconSize: [25, 41],
+            })
+          );
+        }
+      } catch (e) {
+        console.log('error setting user favourite', e.message);
       }
 
       if (distance < minDistance) {
@@ -113,15 +114,19 @@ const addMarkers = (restaurants) => {
       };
 
       favouriteBtn.addEventListener('click', async () => {
-        await updateUser(userData, token);
-        favourite = marker;
-        favourite.setIcon(
-          L.icon({
-            iconUrl: '../images/marker-icon-green.png',
-            iconSize: [25, 41],
-          })
-        );
+        if (favourite !== marker) {
+          await updateUser(userData, token);
+          favourite = marker;
+          favourite.setIcon(
+            L.icon({
+              iconUrl: '../images/marker-icon-green.png',
+              iconSize: [25, 41],
+            })
+          );
+          addMarkers(restaurants);
+        }
       });
+
 
       marker.addEventListener('click', async () => {
         const menu = await dailyMenu(restaurant._id);

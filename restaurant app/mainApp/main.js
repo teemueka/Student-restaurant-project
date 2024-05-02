@@ -4,7 +4,6 @@ import {initializeMap, addMarkers, calculateDistance} from './leaflet.js';
 
 const currentUser = JSON.parse(localStorage.getItem('user'));
 const userToken = localStorage.getItem('token');
-const currentUserByToken = await getCurrentUserByToken(userToken);
 const avatarKey = localStorage.getItem('AVATAR_KEY');
 const bannerPfp = document.getElementById('bannerPfp');
 
@@ -16,17 +15,6 @@ if (currentUser !== null) {
   dropDown.innerHTML = `<a id="noUser" href="../login/login.html">Login</a>`;
 }
 
-console.log(currentUser);
-console.log(userToken);
-console.log(avatarKey);
-console.log(currentUserByToken);
-try {
-  console.log(currentUser.avatar);
-  console.log(currentUserByToken.avatar);
-} catch (e) {
-  console.log(e.message);
-}
-
 if (avatarKey !== null) {
   try {
     bannerPfp.src = await getAvatar(avatarKey);
@@ -34,10 +22,13 @@ if (avatarKey !== null) {
     console.log(error);
   }
 } else {
-  try {
-    bannerPfp.src = await getAvatar(currentUserByToken.avatar);
-  } catch (e) {
-    console.log(e.message);
+  if (userToken !== null) {
+    try {
+      const currentUserByToken = await getCurrentUserByToken(userToken);
+      bannerPfp.src = await getAvatar(currentUserByToken.avatar);
+    } catch (e) {
+      /* empty */
+    }
   }
 }
 
@@ -52,7 +43,6 @@ const processRestaurants = async () => {
   return await fetchData(baseUrl);
 };
 
-// I know this function is a piece of shit, but it works so w.e
 const sortByDistance = async (distance) => {
   const sorted = [];
   const restaurants = await processRestaurants();
@@ -122,9 +112,12 @@ distanceSort.addEventListener('click', async () => {
 
 const logout = () => {
   localStorage.clear();
-  window.location = '../login/login.html';
+  location.reload();
 };
 
-document.getElementById('logoutDrop').addEventListener('click', logout);
-
+document.addEventListener('DOMContentLoaded', () => {
+  if (currentUser !== null) {
+    document.getElementById('logoutDrop').addEventListener('click', logout);
+  }
+});
 await sortRestaurants('all');
