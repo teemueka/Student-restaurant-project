@@ -13,16 +13,14 @@ import {
 } from '../mainApp/validators.js';
 
 const currentUser = JSON.parse(localStorage.getItem('user'));
-const userToken = localStorage.getItem('token');
-const avatarKey = localStorage.getItem('AVATAR_KEY');
-const currentUserByToken = await getCurrentUserByToken(userToken);
-console.log('avatar_key', avatarKey);
-console.log('currentUser', currentUser);
-console.log('token', userToken);
 
 if (currentUser === null) {
   window.location.href = '../../restaurant app/login/login.html';
 }
+
+const userToken = localStorage.getItem('token');
+const avatarKey = localStorage.getItem('AVATAR_KEY');
+const currentUserByToken = await getCurrentUserByToken(userToken);
 
 const deleteButton = document.getElementById('delete');
 const photoInput = document.getElementById('photo');

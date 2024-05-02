@@ -7,7 +7,7 @@ const userToken = localStorage.getItem('token');
 const avatarKey = localStorage.getItem('AVATAR_KEY');
 const bannerPfp = document.getElementById('bannerPfp');
 
-if (currentUser !== null) {
+if (currentUser !== null && currentUser.username !== undefined) {
   document.getElementById('userName').innerHTML = currentUser.username;
 } else {
   const dropDown = document.querySelector('.dropDown-content');
