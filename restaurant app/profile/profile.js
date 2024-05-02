@@ -13,7 +13,6 @@ import {
 } from '../mainApp/validators.js';
 
 const currentUser = JSON.parse(localStorage.getItem('user'));
-
 if (currentUser === null) {
   window.location.href = '../../restaurant app/login/login.html';
 }
@@ -42,76 +41,74 @@ photoInput.addEventListener('change', async (evt) => {
     console.log('Error uploading avatar', error);
   }
 });
-document.addEventListener('DOMContentLoaded', () => {
-  const form = document.getElementById('updateUserForm');
+const form = document.getElementById('updateUserForm');
 
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
 
-    const username = document.getElementById('profileUsername').value;
-    const email = document.getElementById('profileEmail').value.trim();
-    const password = document.getElementById('profilePassword').value.trim();
+  const username = document.getElementById('profileUsername').value;
+  const email = document.getElementById('profileEmail').value.trim();
+  const password = document.getElementById('profilePassword').value.trim();
 
-    let hasErrors = false;
+  let hasErrors = false;
 
-    if (!validateUsername(username)) {
-      document.getElementById('username-error').innerHTML =
-        '<p>Username must be at least 5 characters long</p>';
-      hasErrors = true;
-    } else {
-      if (currentUser.username !== username) {
-        try {
-          const isAvailable = await checkUsernameAvailability(username);
-          document.getElementById('username-error').innerHTML = '';
+  if (!validateUsername(username)) {
+    document.getElementById('username-error').innerHTML =
+      '<p>Username must be at least 5 characters long</p>';
+    hasErrors = true;
+  } else {
+    if (currentUser.username !== username) {
+      try {
+        const isAvailable = await checkUsernameAvailability(username);
+        document.getElementById('username-error').innerHTML = '';
 
-          if (!isAvailable) {
-            document.getElementById('username-error').innerHTML =
-              '<p>Username already taken</p>';
-            hasErrors = true;
-          }
-        } catch (error) {
+        if (!isAvailable) {
           document.getElementById('username-error').innerHTML =
-            '<p>Error validating username</p>';
+            '<p>Username already taken</p>';
           hasErrors = true;
         }
+      } catch (error) {
+        document.getElementById('username-error').innerHTML =
+          '<p>Error validating username</p>';
+        hasErrors = true;
       }
     }
+  }
 
-    if (!validateEmail(email)) {
-      document.getElementById('email-error').innerHTML = '<p>Invalid email</p>';
-      hasErrors = true;
-    } else {
-      document.getElementById('email-error').innerHTML = '';
+  if (!validateEmail(email)) {
+    document.getElementById('email-error').innerHTML = '<p>Invalid email</p>';
+    hasErrors = true;
+  } else {
+    document.getElementById('email-error').innerHTML = '';
+  }
+
+  if (!validatePassword(password)) {
+    document.getElementById('password-error').innerHTML =
+      '<p>Password must contain 8 characters and a number</p>';
+    hasErrors = true;
+  } else {
+    document.getElementById('password-error').innerHTML = '';
+  }
+
+  if (hasErrors) {
+    return;
+  }
+
+  const userData = {
+    username: username,
+    email: email,
+    password: password,
+  };
+
+  try {
+    const responseData = await updateUser(userData, userToken);
+    if (responseData !== undefined) {
+      document.getElementById('userName').innerHTML =
+        responseData.data.username;
     }
-
-    if (!validatePassword(password)) {
-      document.getElementById('password-error').innerHTML =
-        '<p>Password must contain 8 characters and a number</p>';
-      hasErrors = true;
-    } else {
-      document.getElementById('password-error').innerHTML = '';
-    }
-
-    if (hasErrors) {
-      return;
-    }
-
-    const userData = {
-      username: username,
-      email: email,
-      password: password,
-    };
-
-    try {
-      const responseData = await updateUser(userData, userToken);
-      if (responseData !== undefined) {
-        document.getElementById('userName').innerHTML =
-          responseData.data.username;
-      }
-    } catch (error) {
-      console.error('Update failed', error);
-    }
-  });
+  } catch (error) {
+    console.error('Update failed', error);
+  }
 });
 
 if (currentUser !== null) {
