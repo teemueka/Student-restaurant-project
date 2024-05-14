@@ -1,7 +1,19 @@
 # Student restaurant app
 
-- [login](https://users.metropolia.fi/~teemueka/wsk1/Yksil%c3%b6teht%c3%a4v%c3%a4/restaurant%20app/login/login.html)
-- [main app](https://users.metropolia.fi/~teemueka/wsk1/Yksil%c3%b6teht%c3%a4v%c3%a4/restaurant%20app/mainApp/main.html)
-- [profile](https://users.metropolia.fi/~teemueka/wsk1/Yksil%c3%b6teht%c3%a4v%c3%a4/restaurant%20app/profile/profile.html)
+- [Linkki Demoon](https://users.metropolia.fi/~teemueka/restaurant%20app/mainApp/main.html)
 
-this projects is still in progress and not yet fully functional
+**Huom.** Profiilista takaisin sovellukseen pääsee klikkaamalla "student restaurants" headeria. 
+
+### Toiminnallisuudet
+
+- Kirjautuminen + rekisteröityminen
+- Profiilikuvan lisäys
+- Käyttäjätietojen päivitys
+- Käyttäjän poistaminen
+- Uloskirjautuminen
+- Lempi ravintolan valikointi
+- Viikon ja päivän menut
+- Filtteröinti ketjun / matkan mukaan
+- Lähin ravintola korostettu
+- Client side validointi profiilissa/kirjautumisessa/rekisteröinnissä/distancessa
+
