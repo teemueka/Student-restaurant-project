@@ -1,5 +1,5 @@
 import {restaurantModal} from './components.js';
-import {dailyMenu, updateUser, weeklyMenu} from './variables.js';
+import {dailyMenu, updateUser, weeklyMenu} from './api.js';
 
 let map;
 let markers = [];

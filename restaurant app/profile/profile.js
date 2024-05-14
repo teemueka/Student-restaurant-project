@@ -5,7 +5,7 @@ import {
   getAvatar,
   deleteUser,
   getCurrentUserByToken,
-} from '../mainApp/variables.js';
+} from '../mainApp/api.js';
 import {
   validateUsername,
   validateEmail,
@@ -84,7 +84,7 @@ form.addEventListener('submit', async (e) => {
 
   if (!validatePassword(password)) {
     document.getElementById('password-error').innerHTML =
-      '<p>Password must contain 8 characters and a number</p>';
+      '<p>Password must contain 7 characters and a number</p>';
     hasErrors = true;
   } else {
     document.getElementById('password-error').innerHTML = '';

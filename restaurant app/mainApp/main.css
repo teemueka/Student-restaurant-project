@@ -62,13 +62,13 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 70vh;
+  height: 65vh;
   margin-bottom: 2rem;
 }
 
 #map {
   height: 100%;
-  width: 75%;
+  width: 80vw;
   border: 2px solid #000;
   box-shadow: 5px 5px 5px rgb(0 0 0 / 50%)
 }
@@ -109,8 +109,8 @@ button {
 
 .modal {
   max-height: 70vh;
-  max-width: 75%;
-  position: absolute;
+  width: 40vw;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -146,4 +146,13 @@ button {
 
 .dropDown:hover .dropDown-content {
   display: block;
+}
+
+.modal button {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 0.5rem;
+  align-items: center;
+  margin: 0.3rem 0 0 0;
 }

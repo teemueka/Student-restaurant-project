@@ -1,9 +1,8 @@
 import {baseUrl} from './utils.js';
-import {fetchData, getAvatar, getCurrentUserByToken} from './variables.js';
+import {fetchData, getAvatar, getCurrentUserByToken} from './api.js';
 import {initializeMap, addMarkers, calculateDistance} from './leaflet.js';
 
 const currentUser = JSON.parse(localStorage.getItem('user'));
-console.log(currentUser);
 const userToken = localStorage.getItem('token');
 const avatarKey = localStorage.getItem('AVATAR_KEY');
 const bannerPfp = document.getElementById('bannerPfp');
